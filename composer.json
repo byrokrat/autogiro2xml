@@ -1,0 +1,31 @@
+{
+    "name": "byrokrat/autogiro2xml",
+    "description": "Command line utility for converting autogiro files to XML",
+    "keywords": ["autogiro", "XML"],
+    "homepage": "https://github.com/byrokrat/autogiro2xml",
+    "type": "project",
+    "license": "GPL-3.0-or-later",
+    "authors": [
+        {
+            "name": "Hannes Forsgård",
+            "email": "hannes.forsgard@fripost.org"
+        }
+    ],
+    "bin": [
+        "bin/autogiro2xml"
+    ],
+    "autoload": {
+        "psr-4": {
+            "byrokrat\\autogiro2xml\\": ["src/"]
+        }
+    },
+    "require": {
+        "php": ">=7.1",
+        "ext-mbstring": "*",
+        "ext-bcmath": "*",
+        "ext-simplexml": "*",
+        "roave/security-advisories": "dev-master",
+        "byrokrat/autogiro": "^1.0@beta",
+        "symfony/console": "^4"
+    }
+}

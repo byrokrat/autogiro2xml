@@ -1,0 +1,10 @@
+#!/usr/bin/env php
+<?php
+
+declare(strict_types = 1);
+
+namespace byrokrat\autogiro2xml;
+
+require __DIR__ . '/../vendor/autoload.php';
+
+(new Application('autogiro2xml', '@app_version@'))->run();

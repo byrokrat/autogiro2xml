@@ -1,0 +1,13 @@
+{
+    "main": "bin/autogiro2xml",
+    "output": "autogiro2xml.phar",
+    "directories": [
+        "src",
+        "vendor"
+    ],
+    "compactors": [
+        "KevinGH\\Box\\Compactor\\Php"
+    ],
+    "git-tag": "app_version",
+    "algorithm": "SHA512"
+}
