@@ -40,6 +40,66 @@ class Command extends \Symfony\Component\Console\Command\Command
                 "Set format ({$this->formatPool->getListOfFormats()})",
                 'xml'
             )
+            ->addOption(
+                'stop-on-failure',
+                null,
+                InputOption::VALUE_NONE,
+                'Stop processing once an error occurs'
+            )
+            ->addOption(
+                'ignore-accounts',
+                null,
+                InputOption::VALUE_NONE,
+                'Ignore account numbers while parsing'
+            )
+            ->addOption(
+                'ignore-ids',
+                null,
+                InputOption::VALUE_NONE,
+                'Ignore state id numbers while parsing'
+            )
+            ->addOption(
+                'ignore-amounts',
+                null,
+                InputOption::VALUE_NONE,
+                'Ignore monetary amounts while parsing'
+            )
+            ->addOption(
+                'ignore-dates',
+                null,
+                InputOption::VALUE_NONE,
+                'Ignore dates while parsing'
+            )
+            ->addOption(
+                'ignore-messages',
+                null,
+                InputOption::VALUE_NONE,
+                'Ignore messages while parsing'
+            )
+            ->addOption(
+                'ignore-basic-validation',
+                null,
+                InputOption::VALUE_NONE,
+                'Ignore basic validation while parsing'
+            )
+            ->addOption(
+                'ignore-strict-validation',
+                null,
+                InputOption::VALUE_NONE,
+                'Ignore strict validation while parsing'
+            )
+            ->addOption(
+                'ignore-objects',
+                null,
+                InputOption::VALUE_NONE,
+                'Ignore all objects while parsing'
+            )
+            ->addOption(
+                'ignore-all',
+                null,
+                InputOption::VALUE_NONE,
+                'Ignore all visitors while parsing'
+            )
         ;
     }
 
