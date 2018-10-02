@@ -13,6 +13,45 @@ use byrokrat\autogiro\Parser\ParserFactory;
 
 class Command extends \Symfony\Component\Console\Command\Command
 {
+    private const FLAG_OPTIONS = [
+    'ignore-accounts' => [
+        ParserFactory::VISITOR_IGNORE_ACCOUNTS,
+        'Ignore accounts when parsing',
+    ],
+    'ignore-amounts' => [
+        ParserFactory::VISITOR_IGNORE_AMOUNTS,
+        'Ignore monetary amounts when parsing',
+    ],
+    'ignore-ids' => [
+        ParserFactory::VISITOR_IGNORE_IDS,
+        'Ignore state ids when parsing',
+    ],
+    'ignore-dates' => [
+        ParserFactory::VISITOR_IGNORE_DATES,
+        'Ignore dates when parsing',
+    ],
+    'ignore-messages' => [
+        ParserFactory::VISITOR_IGNORE_MESSAGES,
+        'Ignore messages when parsing',
+    ],
+    'ignore-basic-validation' => [
+        ParserFactory::VISITOR_IGNORE_BASIC_VALIDATION,
+        'Ignore basic validation when parsing',
+    ],
+    'ignore-strict-validation' => [
+        ParserFactory::VISITOR_IGNORE_STRICT_VALIDATION,
+        'Ignore strict validation when parsing',
+    ],
+    'ignore-objects' => [
+        ParserFactory::VISITOR_IGNORE_OBJECTS,
+        'Ignore objects when parsing',
+    ],
+    'ignore-all' => [
+        ParserFactory::VISITOR_IGNORE_ALL,
+        'Ignore all visitors when parsing',
+    ],
+];
+
     /**
      * @var FormatPool
      */
@@ -40,14 +79,34 @@ class Command extends \Symfony\Component\Console\Command\Command
                 "Set format ({$this->formatPool->getListOfFormats()})",
                 'xml'
             )
+            ->addOption(
+                'stop-on-failure',
+                null,
+                InputOption::VALUE_NONE,
+                'Stop processing once an error occurs'
+            )
         ;
+        
+        foreach (self::FLAG_OPTIONS as $option => list(, $desc) {
+            $this->addOption(
+                $option,
+                null,
+                InputOption::VALUE_NONE,
+                $desc
+            );
+        }
     }
 
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
-        // TODO flags till factory ska läsas från options...
         $parserFlags = 0;
 
+        foreach (self::FLAG_OPTIONS as $option => list($flag) {
+            if ($input->getOption($option)) {
+                $parserFlags = $parserFlags | $flag;
+            }
+        }
+        
         $parser = (new ParserFactory)->createParser($parserFlags);
 
         $format = $this->formatPool->getFormat($input->getOption('format'));
@@ -59,6 +118,9 @@ class Command extends \Symfony\Component\Console\Command\Command
                 $format->formatNode($filename, $parser->parse($content));
             } catch (AutogiroException $exception) {
                 $format->formatError($filename, $exception);
+                if ($input->getOption('stop-on-failure')) {
+                    break;
+                }
             }
         }
 
