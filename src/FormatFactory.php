@@ -4,7 +4,7 @@ declare(strict_types = 1);
 
 namespace byrokrat\autogiro2xml;
 
-class FormatPool
+class FormatFactory
 {
     /**
      * @var FormatInterface[]
@@ -15,15 +15,16 @@ class FormatPool
     {
         $this->formats = [
             'xml' => new XmlFormat,
+            'validate' => new ValidateFormat,
         ];
     }
 
-    public function getListOfFormats(): string
+    public function getSupportedFormats(): string
     {
         return implode(', ', array_keys($this->formats));
     }
 
-    public function getFormat(string $formatId): FormatInterface
+    public function createFormat(string $formatId): FormatInterface
     {
         if (!isset($this->formats[$formatId])) {
             throw new \RuntimeException("Unknown format $formatId");

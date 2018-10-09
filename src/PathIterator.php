@@ -28,12 +28,20 @@ class PathIterator implements \IteratorAggregate
 
     private function iterate(string $path): iterable
     {
-        if (is_file($path) && is_readable($path)) {
-            yield $path => file_get_contents($path);
+        if (is_dir($path) && is_readable($path)) {
+            foreach (new \DirectoryIterator($path) as $fileInfo) {
+                if ($fileInfo->isDot()) {
+                    continue;
+                }
+                yield from $this->iterate($fileInfo->getPathname());
+            }
+            return;
         }
 
-        if (is_dir($path) && is_readable($path)) {
-            // TODO yield from directory with recursion...
+        $content = @file_get_contents($path);
+
+        if (false !== $content) {
+            yield $path => $content;
         }
     }
 }

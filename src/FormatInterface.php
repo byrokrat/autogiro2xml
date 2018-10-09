@@ -1,10 +1,8 @@
 <?php
 
-declare(strict_types = 1);
-
 namespace byrokrat\autogiro2xml;
 
-use Symfony\Component\Console\Output\OutputInterface;
+use Symfony\Component\Console\Output\ConsoleOutputInterface;
 use byrokrat\autogiro\Exception as AutogiroException;
 use byrokrat\autogiro\Tree\Node;
 
@@ -13,7 +11,7 @@ interface FormatInterface
     /**
      * Initialize and set output
      */
-    public function initialize(OutputInterface $output): void;
+    public function initialize(ConsoleOutputInterface $output): void;
 
     /**
      * Format a parsed node
@@ -28,5 +26,5 @@ interface FormatInterface
     /**
      * Finilize and return application exit status code
      */
-    public function finalize(): int;
+    public function finalize(): void;
 }
