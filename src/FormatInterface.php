@@ -3,7 +3,6 @@
 namespace byrokrat\autogiro2xml;
 
 use Symfony\Component\Console\Output\ConsoleOutputInterface;
-use byrokrat\autogiro\Exception as AutogiroException;
 use byrokrat\autogiro\Tree\Node;
 
 interface FormatInterface
@@ -21,7 +20,7 @@ interface FormatInterface
     /**
      * Format a parser error
      */
-    public function formatError(string $filename, AutogiroException $exception): void;
+    public function formatError(string $filename, \Exception $exception): void;
 
     /**
      * Finilize and return application exit status code

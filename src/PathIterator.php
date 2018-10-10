@@ -12,7 +12,7 @@ class PathIterator implements \IteratorAggregate
     private $paths;
 
     /**
-     * @param string[]
+     * @param string[] $paths
      */
     public function __construct(array $paths)
     {

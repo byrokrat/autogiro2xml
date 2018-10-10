@@ -9,7 +9,6 @@ use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Output\ConsoleOutputInterface;
-use byrokrat\autogiro\Exception as AutogiroException;
 use byrokrat\autogiro\Parser\ParserFactory;
 
 class Command extends \Symfony\Component\Console\Command\Command
@@ -125,7 +124,7 @@ class Command extends \Symfony\Component\Console\Command\Command
         foreach (new PathIterator($paths) as $filename => $content) {
             try {
                 $format->formatNode($filename, $parser->parse($content));
-            } catch (AutogiroException $exception) {
+            } catch (\Exception $exception) {
                 $format->formatError($filename, $exception);
                 $returnCode = 1;
                 if ($input->getOption('stop-on-failure')) {

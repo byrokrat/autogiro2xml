@@ -5,7 +5,6 @@ declare(strict_types = 1);
 namespace byrokrat\autogiro2xml;
 
 use Symfony\Component\Console\Output\ConsoleOutputInterface;
-use byrokrat\autogiro\Exception as AutogiroException;
 use byrokrat\autogiro\Tree\Node;
 
 class ValidateFormat implements FormatInterface
@@ -38,7 +37,7 @@ class ValidateFormat implements FormatInterface
         $this->passCount++;
     }
 
-    public function formatError(string $filename, AutogiroException $exception): void
+    public function formatError(string $filename, \Exception $exception): void
     {
         $this->output->writeln(
             sprintf(

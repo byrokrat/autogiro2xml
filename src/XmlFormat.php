@@ -5,15 +5,14 @@ declare(strict_types = 1);
 namespace byrokrat\autogiro2xml;
 
 use Symfony\Component\Console\Output\ConsoleOutputInterface;
-use byrokrat\autogiro\Exception as AutogiroException;
 use byrokrat\autogiro\Tree\Node;
 use byrokrat\autogiro\Xml\XmlWriterFactory;
-use byrokrat\autogiro\Xml\XmlWriterInterface;
+use byrokrat\autogiro\Xml\XmlWriter;
 
 class XmlFormat implements FormatInterface
 {
     /**
-     * @var XmlWriterInterface
+     * @var XmlWriter
      */
     private $xmlWriter;
 
@@ -22,7 +21,7 @@ class XmlFormat implements FormatInterface
      */
     private $output;
 
-    public function __construct(XmlWriterInterface $xmlWriter = null)
+    public function __construct(XmlWriter $xmlWriter = null)
     {
         $this->xmlWriter = $xmlWriter ?: (new XmlWriterFactory)->createXmlWriter();
     }
@@ -39,7 +38,7 @@ class XmlFormat implements FormatInterface
         );
     }
 
-    public function formatError(string $filename, AutogiroException $exception): void
+    public function formatError(string $filename, \Exception $exception): void
     {
         $this->output->getErrorOutput()->writeln(
             $exception->getMessage()
