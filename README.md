@@ -9,9 +9,10 @@ Command line utility for converting autogiro files to XML.
 
 ### As a phar archive
 
-Download the latest version of `autogiro2xml.phar` from the github
-[releases](https://github.com/byrokrat/autogiro2xml/releases) page. Optionally
-rename to `autogiro2xml` for a smoother experience.
+Download the latest version from the github
+[releases](https://github.com/byrokrat/autogiro2xml/releases) page.
+
+Optionally rename `autogiro2xml.phar` to `autogiro2xml` for a smoother experience.
 
 ### Through composer
 
@@ -21,6 +22,8 @@ something like
 ```shell
 composer require byrokrat/autogiro2xml
 ```
+
+This will make `autogiro2xml` avaliable as `vendor/bin/autogiro2xml`.
 
 ## Usage
 
@@ -36,7 +39,7 @@ Works well with \*nix streams and pipes.
 cat filename | autogiro2xml > output.xml
 ```
 
-Validate that autogiro files are valid using the `--format=validate` option.
+Validate autogiro files using the `--format=validate` option.
 
 ```shell
 autogiro2xml --format=validate <filename>
@@ -51,11 +54,41 @@ autogiro2xml --format=validate /dir/with/ag/files
 Use the `--stop-on-failure` option to stop processing once a broken file is found.
 
 ```shell
-autogiro2xml --format=validate --stop-on-filure /dir/with/ag/files
+autogiro2xml --format=validate --stop-on-failure /dir/with/ag/files
 ```
 
 For the complete help see
 
 ```shell
 autogiro2xml --help
+```
+
+## Building
+
+We are using [bob](https://github.com/CHH/bob) to run tests and build artifacts.
+
+To complete a build you must first install some dependencies.
+
+```shell
+composer install
+composer global require chh/bob:^1.0@alpha
+bob install_dev_tools
+```
+
+Make sure to have the global composer bin directory in your include path.
+
+```shell
+export PATH=$PATH:~/.composer/vendor/bin/
+```
+
+Build project from within the project directory tree.
+
+```shell
+bob
+```
+
+Or for more information run
+
+```shell
+bob --tasks
 ```
