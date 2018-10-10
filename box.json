@@ -8,6 +8,5 @@
     "compactors": [
         "KevinGH\\Box\\Compactor\\Php"
     ],
-    "git-tag": "app_version",
     "algorithm": "SHA512"
 }
