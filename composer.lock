@@ -56,16 +56,16 @@
         },
         {
             "name": "byrokrat/autogiro",
-            "version": "1.0.0-beta3",
+            "version": "1.0.0-beta5",
             "source": {
                 "type": "git",
                 "url": "https://github.com/byrokrat/autogiro.git",
-                "reference": "444c2d0e0ce0c1a91ac09a3d947c1290e60201d6"
+                "reference": "9583885c94db0943f417e58796c40ab2b577a330"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/byrokrat/autogiro/zipball/444c2d0e0ce0c1a91ac09a3d947c1290e60201d6",
-                "reference": "444c2d0e0ce0c1a91ac09a3d947c1290e60201d6",
+                "url": "https://api.github.com/repos/byrokrat/autogiro/zipball/9583885c94db0943f417e58796c40ab2b577a330",
+                "reference": "9583885c94db0943f417e58796c40ab2b577a330",
                 "shasum": ""
             },
             "require": {
@@ -76,9 +76,6 @@
                 "neitanod/forceutf8": "~2.0",
                 "php": ">=7.1"
             },
-            "bin": [
-                "bin/autogiro2xml"
-            ],
             "type": "library",
             "autoload": {
                 "psr-4": {
@@ -102,7 +99,7 @@
             "keywords": [
                 "autogiro"
             ],
-            "time": "2018-09-20T08:17:51+00:00"
+            "time": "2018-10-13T08:01:37+00:00"
         },
         {
             "name": "byrokrat/banking",
@@ -287,7 +284,7 @@
                 "laravel/socialite": ">=1,<1.0.99|>=2,<2.0.10",
                 "magento/magento1ce": "<1.9.3.9",
                 "magento/magento1ee": ">=1.9,<1.14.3.2",
-                "magento/product-community-edition": ">=2,<2.2.5",
+                "magento/product-community-edition": ">=2,<2.2.6",
                 "monolog/monolog": ">=1.8,<1.12",
                 "namshi/jose": "<2.2",
                 "onelogin/php-saml": "<2.10.4",
@@ -402,7 +399,7 @@
                 }
             ],
             "description": "Prevents installation of composer packages with known security vulnerabilities: no API, simply require it",
-            "time": "2018-10-05T18:14:02+00:00"
+            "time": "2018-10-12T22:19:58+00:00"
         },
         {
             "name": "symfony/console",
