@@ -33,7 +33,7 @@ class XmlFormat implements FormatInterface
 
     public function formatNode(string $filename, Node $node): void
     {
-        $this->output->writeln(
+        $this->output->write(
             $this->xmlWriter->asXml($node)
         );
     }
