@@ -57,6 +57,12 @@ Use the `--stop-on-failure` option to stop processing once a broken file is foun
 autogiro2xml --format=validate --stop-on-failure /dir/with/ag/files
 ```
 
+Parse a directory of autogiro files and save error descriptions
+
+```shell
+autogiro2xml --format=validate <dirname> 2> errors.txt
+```
+
 For the complete help see
 
 ```shell
