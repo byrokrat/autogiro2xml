@@ -39,7 +39,7 @@ class ValidateFormat implements FormatInterface
 
     public function formatError(string $filename, \Exception $exception): void
     {
-        $this->output->writeln(
+        $this->output->getErrorOutput()->writeln(
             sprintf(
                 "FAIL: %s \n\n%s\n",
                 $filename,
