@@ -113,12 +113,16 @@ class Command extends \Symfony\Component\Console\Command\Command
 
         $parser = (new ParserFactory)->createParser($parserFlags);
 
-        $format = $this->formatFactory->createFormat($input->getOption('format'));
+        /** @var string */
+        $formatId = $input->getOption('format');
+
+        $format = $this->formatFactory->createFormat($formatId);
 
         $format->initialize($output);
 
         $returnCode = 0;
 
+        /** @var array */
         $paths = $input->getArgument('path') ?: ['php://stdin'];
 
         foreach (new PathIterator($paths) as $filename => $content) {
