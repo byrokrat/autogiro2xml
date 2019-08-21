@@ -43,6 +43,12 @@ class XmlFormat implements FormatInterface
         $this->output->getErrorOutput()->writeln(
             $exception->getMessage()
         );
+
+        if ($this->output->isVerbose()) {
+            $this->output->getErrorOutput()->writeln(
+                $exception->getTraceAsString()
+            );
+        }
     }
 
     public function finalize(): void
