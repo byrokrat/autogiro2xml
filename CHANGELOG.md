@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
+## 1.0.5 - 2019-08-23
+
+### Fixed
+
+- Make sure that releases are built using the lowest supported php version
+
 ## 1.0.4 - 2019-08-21
 
 ### Fixed

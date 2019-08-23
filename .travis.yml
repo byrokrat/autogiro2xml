@@ -9,14 +9,12 @@ php:
 
 install:
   - composer install
-  - composer global require chh/bob:^1@alpha
-  - export PATH=$PATH:$HOME/.config/composer/vendor/bin/:$HOME/.composer/vendor/bin/
-  - bob install_dev_tools
+  - make vendor/bin/behat
 
 script:
-  - behat --verbose --suite default
-  - bob phar
-  - behat --verbose --suite phar
+  - make build
+  - vendor/bin/behat --suite=debug
+  - vendor/bin/behat --suite=phar
 
 deploy:
   provider: releases
@@ -27,3 +25,4 @@ deploy:
   on:
     tags: true
     repo: byrokrat/autogiro2xml
+    condition: ${TRAVIS_PHP_VERSION:0:3} == "7.1"

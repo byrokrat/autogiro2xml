@@ -69,32 +69,10 @@ For the complete help see
 autogiro2xml --help
 ```
 
-## Building
+## Building from source
 
-We are using [bob](https://github.com/CHH/bob) to run tests and build artifacts.
-
-To complete a build you must first install some dependencies.
+To build you need `make` and composer installed as `composer`.
 
 ```shell
-composer install
-composer global require chh/bob:^1.0@alpha
-bob install_dev_tools
-```
-
-Make sure to have the global composer bin directory in your include path.
-
-```shell
-export PATH=$PATH:~/.composer/vendor/bin/
-```
-
-Build project from within the project directory tree.
-
-```shell
-bob
-```
-
-Or for more information run
-
-```shell
-bob --tasks
+make
 ```
