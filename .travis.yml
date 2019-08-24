@@ -7,9 +7,7 @@ php:
   - 7.2
   - 7.1
 
-install:
-  - composer install
-  - make vendor/bin/behat
+install: true
 
 script:
   - make build
