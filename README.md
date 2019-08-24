@@ -25,6 +25,21 @@ composer require byrokrat/autogiro2xml
 
 This will make `autogiro2xml` avaliable as `vendor/bin/autogiro2xml`.
 
+### From source
+
+To build you need `make`
+
+```shell
+make
+sudo make install
+```
+
+If composer is not installed as `composer` you can use something like
+
+```shell
+make COMPOSER_CMD=./composer.phar
+```
+
 ## Usage
 
 Transforming an autogiro file to XML.
@@ -67,12 +82,4 @@ For the complete help see
 
 ```shell
 autogiro2xml --help
-```
-
-## Building from source
-
-To build you need `make` and composer installed as `composer`.
-
-```shell
-make
 ```

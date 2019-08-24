@@ -13,7 +13,7 @@ install:
 
 script:
   - make build
-  - vendor/bin/behat --suite=debug
+  - vendor/bin/behat --suite=default
   - vendor/bin/behat --suite=phar
 
 deploy:
