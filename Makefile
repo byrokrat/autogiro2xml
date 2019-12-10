@@ -72,7 +72,7 @@ check: vendor-bin/installed $(TARGET)
 	$(BEHAT) --stop-on-failure --suite=phar
 
 phpstan: vendor-bin/installed
-	$(PHPSTAN) analyze -l 7 src
+	$(PHPSTAN) analyze -c phpstan.neon -l 7 src
 
 phpcs: vendor-bin/installed
 	$(PHPCS) src --standard=PSR2
