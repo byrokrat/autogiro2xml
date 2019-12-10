@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
+## 1.0.6 - 2019-12-10
+
+### Fixed
+
+- Update dependencies, now using autogiro 1.0 stable channel
+
 ## 1.0.5 - 2019-08-24
 
 ### Fixed
