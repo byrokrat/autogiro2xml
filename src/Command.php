@@ -63,6 +63,9 @@ class Command extends \Symfony\Component\Console\Command\Command
         parent::__construct();
     }
 
+    /**
+     * @return void
+     */
     protected function configure()
     {
         $this->setName('autogiro2xml')
@@ -122,7 +125,7 @@ class Command extends \Symfony\Component\Console\Command\Command
 
         $returnCode = 0;
 
-        /** @var array */
+        /** @var array<string> $paths */
         $paths = $input->getArgument('path') ?: ['php://stdin'];
 
         foreach (new PathIterator($paths) as $filename => $content) {

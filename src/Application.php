@@ -4,18 +4,14 @@ declare(strict_types = 1);
 
 namespace byrokrat\autogiro2xml;
 
-use Symfony\Component\Console\Input\InputInterface;
-
 class Application extends \Symfony\Component\Console\Application
 {
     /**
      * Gets the name of the command based on input.
      *
-     * @param InputInterface $input The input interface
-     *
-     * @return string The command name
+     * @return string
      */
-    protected function getCommandName(InputInterface $input)
+    protected function getCommandName(\Symfony\Component\Console\Input\InputInterface $input)
     {
         // This should return the name of your command.
         return 'autogiro2xml';
@@ -24,7 +20,7 @@ class Application extends \Symfony\Component\Console\Application
     /**
      * Gets the default commands that should always be available.
      *
-     * @return array An array of default Command instances
+     * @return array<\Symfony\Component\Console\Command\Command>
      */
     protected function getDefaultCommands()
     {
@@ -40,6 +36,8 @@ class Application extends \Symfony\Component\Console\Application
     /**
      * Overridden so that the application doesn't expect the command
      * name to be the first argument.
+     *
+     * @return \Symfony\Component\Console\Input\InputDefinition
      */
     public function getDefinition()
     {

@@ -19,6 +19,9 @@ class PathIterator implements \IteratorAggregate
         $this->paths = $paths;
     }
 
+    /**
+     * @return iterable<string, string>
+     */
     public function getIterator(): iterable
     {
         foreach ($this->paths as $path) {
@@ -26,6 +29,9 @@ class PathIterator implements \IteratorAggregate
         }
     }
 
+    /**
+     * @return iterable<string, string>
+     */
     private function iterate(string $path): iterable
     {
         if (is_dir($path) && is_readable($path)) {
