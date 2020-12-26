@@ -1,10 +1,10 @@
-BEHAT=vendor/bin/behat
-PHPSTAN=vendor/bin/phpstan
-PHPCS=vendor/bin/phpcs
-BOX=vendor/bin/box
-SECURITY_CHECKER=vendor/bin/security-checker
-
 COMPOSER_CMD=composer
+PHIVE_CMD=phive
+
+BEHAT_CMD=tools/behat
+BOX_CMD=tools/box
+PHPCS_CMD=tools/phpcs
+PHPSTAN_CMD=tools/phpstan
 
 TARGET=autogiro2xml.phar
 DESTDIR=/usr/local/bin
@@ -17,17 +17,17 @@ SRC_FILES:=$(shell find src/ -type f -name '*.php')
 
 all: test analyze build check
 
-build: preconds $(TARGET)
+build: $(TARGET)
 
-$(TARGET): vendor-bin/installed $(SRC_FILES) bin/autogiro2xml box.json.dist
+$(TARGET): $(SRC_FILES) bin/autogiro2xml box.json $(BOX_CMD)
 	$(COMPOSER_CMD) install --prefer-dist --no-dev
-	$(BOX) compile
+	$(BOX_CMD) compile
 	$(COMPOSER_CMD) install
 
 clean:
 	rm $(TARGET) --interactive=no -f
 	rm -rf vendor
-	rm -rf vendor-bin
+	rm -rf tools
 
 #
 # Install/uninstall
@@ -43,21 +43,6 @@ uninstall:
 	rm -f $(DESTDIR)/autogiro2xml
 
 #
-# Build preconditions
-#
-
-.PHONY: preconds dependency_check security_check
-
-preconds: dependency_check security_check
-
-dependency_check: vendor/installed
-	$(COMPOSER_CMD) validate --strict
-	$(COMPOSER_CMD) outdated --strict --minor-only
-
-security_check: vendor-bin/installed
-	$(SECURITY_CHECKER) security:check composer.lock
-
-#
 # Tests and analysis
 #
 
@@ -65,17 +50,17 @@ security_check: vendor-bin/installed
 
 analyze: phpstan phpcs
 
-test: vendor-bin/installed
-	$(BEHAT) --stop-on-failure --suite=default
+test: $(BEHAT_CMD)
+	$(BEHAT_CMD) --stop-on-failure --suite=default
 
-check: vendor-bin/installed $(TARGET)
-	$(BEHAT) --stop-on-failure --suite=phar
+check: $(TARGET) $(BEHAT_CMD)
+	$(BEHAT_CMD) --stop-on-failure --suite=phar
 
-phpstan: vendor-bin/installed
-	$(PHPSTAN) analyze -c phpstan.neon -l 7 src
+phpstan: $(PHPSTAN_CMD)
+	$(PHPSTAN_CMD) analyze -l 8 src
 
-phpcs: vendor-bin/installed
-	$(PHPCS) src --standard=PSR2
+phpcs: $(PHPCS_CMD)
+	$(PHPCS_CMD) src --standard=PSR2
 
 #
 # Dependencies
@@ -88,10 +73,11 @@ vendor/installed: composer.lock
 	$(COMPOSER_CMD) install
 	touch $@
 
-vendor-bin/installed: vendor/installed
-	$(COMPOSER_CMD) bin behat require behat/behat:^3
-	$(COMPOSER_CMD) bin phpstan require "phpstan/phpstan:<2"
-	$(COMPOSER_CMD) bin phpcs require squizlabs/php_codesniffer:^3
-	$(COMPOSER_CMD) bin box require humbug/box:^3
-	$(COMPOSER_CMD) bin security-checker require sensiolabs/security-checker
+tools/installed: .phive/phars.xml
+	$(PHIVE_CMD) install --force-accept-unsigned --trust-gpg-keys CF1A108D0E7AE720,31C7E470E2138192,0FD3A3029E470F86
 	touch $@
+
+$(BEHAT_CMD): tools/installed
+$(BOX_CMD): tools/installed
+$(PHPCS_CMD): tools/installed
+$(PHPSTAN_CMD): tools/installed

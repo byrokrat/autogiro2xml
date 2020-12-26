@@ -3,25 +3,16 @@ sudo: false
 language: php
 
 php:
-  - 7.4
-  - 7.3
-  - 7.2
-  - 7.1
+    - 8.0
+    - 7.4
+    - 7.3
 
-install: true
+install:
+    - make vendor/installed
+    - wget -O phive.phar https://phar.io/releases/phive.phar
+    - make tools/installed PHIVE_CMD="php phive.phar"
 
 script:
-  - make build
-  - vendor/bin/behat --suite=default
-  - vendor/bin/behat --suite=phar
-
-deploy:
-  provider: releases
-  api_key:
-    secure: r5SsEp7Rb2va/fgsfmP9DZ79WTFzbC9V1EFX5ZPKtuI9cD4Au2vlRv+QP3gV0xuHjm3ioqWX+5DuGZSbj0jUauVzF5ZyrgliPijXtSxPuA439jbWeqz0VyQd064Of4dvtKxLc644WnADOiT4PI4zohFIBnraBKI4HI068FW+kPIHO9vQ3zjTPuRrRF5Qle8C4I5K7ZJXxzW9/4Nftx7nn7zQrkBApy64nmjNoiLfGKPFrkRm+/RDActZVRuWMFjlA7riemkVNI2YqY0+3HlpghUZKE+71QYR+O1O4dzf8f6IUF3f5ITqiMGQRNSkxu1e8ggvchxtyWOFJEn6xRxCtO5v6FaABFiI2ufUezoCvVvmAxIRj9voj4yChXujnTgJEr7rkKfWjBavKDLnYxhjOJKYjwNxO5NnaSWLwLDVjzE9okLEX9FDq/lCGlzkOpD6zGQB4y0nJphaC5G+r8bwOj7+NVuF2b0jmA6Sg8L6/8htT0zaGiXSB5RRD4t9jr/z8ohSmEkl9hlcbzUbV8Yj/8uAnoDCltlLB9PTpnzfMbDG2s4eTydOaZioOKWQmQGXTgMmRQiPl6ku2P9NtuWzR+QPv3TiMqvhHF/BoiMY/mF9c9KFKHrwYGdhtomQe0BbH4cqRsXJfin322EeZqEYpiM1XaiiM5hV2R9F4yCzuZI=
-  file: autogiro2xml.phar
-  skip_cleanup: true
-  on:
-    tags: true
-    repo: byrokrat/autogiro2xml
-    condition: ${TRAVIS_PHP_VERSION:0:3} == "7.1"
+    - tools/behat --suite=default
+    - make build
+    - tools/behat --suite=phar

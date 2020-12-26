@@ -1,4 +1,5 @@
 /vendor
-/vendor-bin
 /composer.phar
 /autogiro2xml.phar
+/*.local.*
+/tools
