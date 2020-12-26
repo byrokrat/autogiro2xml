@@ -1,4 +1,5 @@
 <?php
+
 /**
  * This file is part of autogiro2xml.
  *
@@ -18,14 +19,14 @@
  * Copyright 2018-20 Hannes Forsgård
  */
 
-declare(strict_types = 1);
+declare(strict_types=1);
 
 namespace byrokrat\autogiro2xml;
 
 use Symfony\Component\Console\Output\ConsoleOutputInterface;
 use byrokrat\autogiro\Tree\Node;
 
-class ValidateFormat implements FormatInterface
+final class ValidateFormat implements FormatInterface
 {
     /**
      * @var ConsoleOutputInterface

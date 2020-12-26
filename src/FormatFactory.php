@@ -1,4 +1,5 @@
 <?php
+
 /**
  * This file is part of autogiro2xml.
  *
@@ -18,22 +19,24 @@
  * Copyright 2018-20 Hannes Forsgård
  */
 
-declare(strict_types = 1);
+declare(strict_types=1);
 
 namespace byrokrat\autogiro2xml;
 
-class FormatFactory
+use RuntimeException;
+
+final class FormatFactory
 {
     /**
-     * @var FormatInterface[]
+     * @var array<FormatInterface>
      */
     private $formats;
 
     public function __construct()
     {
         $this->formats = [
-            'xml' => new XmlFormat,
-            'validate' => new ValidateFormat,
+            'xml' => new XmlFormat(),
+            'validate' => new ValidateFormat(),
         ];
     }
 
@@ -45,7 +48,7 @@ class FormatFactory
     public function createFormat(string $formatId): FormatInterface
     {
         if (!isset($this->formats[$formatId])) {
-            throw new \RuntimeException("Unknown format $formatId");
+            throw new RuntimeException("Unknown format $formatId");
         }
 
         return $this->formats[$formatId];

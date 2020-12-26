@@ -1,4 +1,5 @@
 <?php
+
 /**
  * This file is part of autogiro2xml.
  *
@@ -18,18 +19,19 @@
  * Copyright 2018-20 Hannes Forsgård
  */
 
-declare(strict_types = 1);
+declare(strict_types=1);
 
 namespace byrokrat\autogiro2xml;
 
+use byrokrat\autogiro\Parser\ParserFactory;
+use LogicException;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Output\ConsoleOutputInterface;
-use byrokrat\autogiro\Parser\ParserFactory;
 
-class Command extends \Symfony\Component\Console\Command\Command
+final class Command extends \Symfony\Component\Console\Command\Command
 {
     private const FLAG_OPTIONS = [
         'ignore-accounts' => [
@@ -77,7 +79,7 @@ class Command extends \Symfony\Component\Console\Command\Command
 
     public function __construct(FormatFactory $formatFactory = null)
     {
-        $this->formatFactory = $formatFactory ?: new FormatFactory;
+        $this->formatFactory = $formatFactory ?: new FormatFactory();
         parent::__construct();
     }
 
@@ -121,7 +123,7 @@ class Command extends \Symfony\Component\Console\Command\Command
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
         if (!$output instanceof ConsoleOutputInterface) {
-            throw new \LogicException('Expecting a ConsoleOutputInterface');
+            throw new LogicException('Expecting a ConsoleOutputInterface');
         }
 
         $parserFlags = 0;
@@ -132,7 +134,7 @@ class Command extends \Symfony\Component\Console\Command\Command
             }
         }
 
-        $parser = (new ParserFactory)->createParser($parserFlags);
+        $parser = (new ParserFactory())->createParser($parserFlags);
 
         /** @var string */
         $formatId = $input->getOption('format');

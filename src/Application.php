@@ -1,4 +1,5 @@
 <?php
+
 /**
  * This file is part of autogiro2xml.
  *
@@ -18,11 +19,11 @@
  * Copyright 2018-20 Hannes Forsgård
  */
 
-declare(strict_types = 1);
+declare(strict_types=1);
 
 namespace byrokrat\autogiro2xml;
 
-class Application extends \Symfony\Component\Console\Application
+final class Application extends \Symfony\Component\Console\Application
 {
     /**
      * Gets the name of the command based on input.

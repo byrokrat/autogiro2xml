@@ -1,4 +1,5 @@
 <?php
+
 /**
  * This file is part of autogiro2xml.
  *
@@ -18,7 +19,7 @@
  * Copyright 2018-20 Hannes Forsgård
  */
 
-declare(strict_types = 1);
+declare(strict_types=1);
 
 namespace byrokrat\autogiro2xml;
 
@@ -27,7 +28,7 @@ use byrokrat\autogiro\Tree\Node;
 use byrokrat\autogiro\Xml\XmlWriterFactory;
 use byrokrat\autogiro\Xml\XmlWriter;
 
-class XmlFormat implements FormatInterface
+final class XmlFormat implements FormatInterface
 {
     /**
      * @var XmlWriter
@@ -41,7 +42,7 @@ class XmlFormat implements FormatInterface
 
     public function __construct(XmlWriter $xmlWriter = null)
     {
-        $this->xmlWriter = $xmlWriter ?: (new XmlWriterFactory)->createXmlWriter();
+        $this->xmlWriter = $xmlWriter ?: (new XmlWriterFactory())->createXmlWriter();
     }
 
     public function initialize(ConsoleOutputInterface $output): void

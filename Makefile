@@ -60,7 +60,7 @@ phpstan: $(PHPSTAN_CMD)
 	$(PHPSTAN_CMD) analyze -l 8 src
 
 phpcs: $(PHPCS_CMD)
-	$(PHPCS_CMD) src --standard=PSR2
+	$(PHPCS_CMD)
 
 #
 # Dependencies

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * This file is part of autogiro2xml.
  *
@@ -18,19 +19,24 @@
  * Copyright 2018-20 Hannes Forsgård
  */
 
-declare(strict_types = 1);
+declare(strict_types=1);
 
 namespace byrokrat\autogiro2xml;
 
-class PathIterator implements \IteratorAggregate
+use DirectoryIterator;
+
+/**
+ * @implements \IteratorAggregate<string, string>
+ */
+final class PathIterator implements \IteratorAggregate
 {
     /**
-     * @var string[]
+     * @var array<string>
      */
     private $paths;
 
     /**
-     * @param string[] $paths
+     * @param array<string> $paths
      */
     public function __construct(array $paths)
     {
@@ -53,7 +59,7 @@ class PathIterator implements \IteratorAggregate
     private function iterate(string $path): iterable
     {
         if (is_dir($path) && is_readable($path)) {
-            foreach (new \DirectoryIterator($path) as $fileInfo) {
+            foreach (new DirectoryIterator($path) as $fileInfo) {
                 if ($fileInfo->isDot()) {
                     continue;
                 }
