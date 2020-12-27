@@ -3,11 +3,15 @@
 All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
-## 1.0.7 - 2020-12-27
+## 1.0.8 - 2020-12-27
 
 - Update dependencies
 - Use roave/security-advisories to avoid including vulnerable packades
 - Bump required minimum PHP version to `7.3`
+
+## 1.0.7 - 2019-12-13
+
+- Update dependencies
 
 ## 1.0.6 - 2019-12-10
 
