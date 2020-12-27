@@ -1,5 +1,7 @@
 /vendor
 /composer.phar
 /autogiro2xml.phar
+/autogiro2xml.phar.asc
 /*.local.*
 /tools
+/VERSION

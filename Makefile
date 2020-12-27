@@ -1,5 +1,6 @@
 COMPOSER_CMD=composer
 PHIVE_CMD=phive
+GPG_CMD=gpg
 
 BEHAT_CMD=tools/behat
 BOX_CMD=tools/box
@@ -8,26 +9,41 @@ PHPSTAN_CMD=tools/phpstan
 
 TARGET=autogiro2xml.phar
 DESTDIR=/usr/local/bin
+VERSION=VERSION
+
+SIGNATURE=${TARGET}.asc
+SIGNATURE_ID=hannes.forsgard@fripost.org
 
 SRC_FILES:=$(shell find src/ -type f -name '*.php')
 
 .DEFAULT_GOAL=all
 
-.PHONY: all build clean
+.PHONY: all build build_release clean sign
 
 all: test analyze build check
 
 build: $(TARGET)
 
-$(TARGET): $(SRC_FILES) bin/autogiro2xml box.json $(BOX_CMD)
-	$(COMPOSER_CMD) install --prefer-dist --no-dev
-	$(BOX_CMD) compile
-	$(COMPOSER_CMD) install
+build_release: all sign
 
 clean:
 	rm $(TARGET) --interactive=no -f
 	rm -rf vendor
 	rm -rf tools
+	rm -f $(VERSION)
+	rm -f $(SIGNATURE)
+
+$(TARGET): $(SRC_FILES) bin/autogiro2xml box.json $(VERSION) $(BOX_CMD)
+	$(BOX_CMD) compile
+
+sign: $(SIGNATURE)
+
+$(SIGNATURE): $(TARGET)
+	$(GPG_CMD) -u $(SIGNATURE_ID) --detach-sign --output $@ $<
+
+.PHONY: $(VERSION)
+$(VERSION):
+	-git describe > $@
 
 #
 # Install/uninstall

@@ -30,8 +30,9 @@ use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Output\ConsoleOutputInterface;
+use Symfony\Component\Console\SingleCommandApplication;
 
-final class Command extends \Symfony\Component\Console\Command\Command
+final class Autogiro2xml
 {
     private const FLAG_OPTIONS = [
         'ignore-accounts' => [
@@ -77,19 +78,18 @@ final class Command extends \Symfony\Component\Console\Command\Command
      */
     private $formatFactory;
 
-    public function __construct(FormatFactory $formatFactory = null)
+    public function __construct()
     {
-        $this->formatFactory = $formatFactory ?: new FormatFactory();
-        parent::__construct();
+        $this->formatFactory = new FormatFactory();
     }
 
-    /**
-     * @return void
-     */
-    protected function configure()
+    public function configure(SingleCommandApplication $app): SingleCommandApplication
     {
-        $this->setName('autogiro2xml')
+        $app
+            ->setName('autogiro2xml')
+            ->setVersion(Version::getVersion())
             ->setDescription('Command line utility for converting autogiro files to XML.')
+            ->setCode([$this, 'execute'])
             ->addArgument(
                 'path',
                 InputArgument::OPTIONAL | InputArgument::IS_ARRAY,
@@ -111,16 +111,18 @@ final class Command extends \Symfony\Component\Console\Command\Command
         ;
 
         foreach (self::FLAG_OPTIONS as $option => list(, $desc)) {
-            $this->addOption(
+            $app->addOption(
                 $option,
                 null,
                 InputOption::VALUE_NONE,
                 $desc
             );
         }
+
+        return $app;
     }
 
-    protected function execute(InputInterface $input, OutputInterface $output): int
+    public function execute(InputInterface $input, OutputInterface $output): int
     {
         if (!$output instanceof ConsoleOutputInterface) {
             throw new LogicException('Expecting a ConsoleOutputInterface');

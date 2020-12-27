@@ -1,4 +1,3 @@
-#!/usr/bin/env php
 <?php
 
 /**
@@ -24,19 +23,16 @@ declare(strict_types=1);
 
 namespace byrokrat\autogiro2xml;
 
-use Symfony\Component\Console\SingleCommandApplication;
+final class Version
+{
+    private const VERSION_FILE = __DIR__ . '/../VERSION';
 
-foreach ([__DIR__ . '/../vendor/autoload.php', __DIR__ . '/../../../autoload.php'] as $autoloader) {
-    if (file_exists($autoloader)) {
-        require_once $autoloader;
-        break;
+    public static function getVersion(): string
+    {
+        if (is_readable(self::VERSION_FILE)) {
+            return trim((string)file_get_contents(self::VERSION_FILE));
+        }
+
+        return 'dev-master';
     }
 }
-
-if (!class_exists(Autogiro2xml::class)) {
-    die("Unable to find autoloader. Did you install dependencies using composer install?\n");
-}
-
-(new Autogiro2xml())
-    ->configure(new SingleCommandApplication())
-    ->run();
