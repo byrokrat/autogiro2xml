@@ -1,49 +1,60 @@
+# Commands expected to be pre-installed
 COMPOSER_CMD=composer
 PHIVE_CMD=phive
 GPG_CMD=gpg
+GIT_CMD=git
 
+# Tools installed by this script
 BEHAT_CMD=tools/behat
 BOX_CMD=tools/box
 PHPCS_CMD=tools/phpcs
 PHPSTAN_CMD=tools/phpstan
 
+# Setup
 TARGET=autogiro2xml.phar
 DESTDIR=/usr/local/bin
 VERSION=VERSION
-
 SIGNATURE=${TARGET}.asc
 SIGNATURE_ID=hannes.forsgard@fripost.org
 
-SRC_FILES:=$(shell find src/ -type f -name '*.php')
+SRC_FILES:=$(shell find src/ bin/ -type f)
 
 .DEFAULT_GOAL=all
 
-.PHONY: all build build_release clean sign
+.PHONY: all clean
 
 all: test analyze build check
 
-build: $(TARGET)
+clean:
+	rm $(TARGET) --interactive=no -f
+	rm $(VERSION) --interactive=no -f
+	rm $(SIGNATURE) --interactive=no -f
+	rm -rf vendor
+	rm -rf tools
+
+#
+# Build and sign
+#
+
+.PHONY: build build_release sign
+
+build:
+	rm -rf $(VERSION)
+	make $(TARGET)
 
 build_release: all sign
 
-clean:
-	rm $(TARGET) --interactive=no -f
-	rm -rf vendor
-	rm -rf tools
-	rm -f $(VERSION)
-	rm -f $(SIGNATURE)
-
-$(TARGET): $(SRC_FILES) bin/autogiro2xml box.json $(VERSION) $(BOX_CMD)
+$(TARGET): vendor/installed $(SRC_FILES) box.json $(VERSION) $(BOX_CMD)
 	$(BOX_CMD) compile
 
 sign: $(SIGNATURE)
 
 $(SIGNATURE): $(TARGET)
+	rm -rf $@
 	$(GPG_CMD) -u $(SIGNATURE_ID) --detach-sign --output $@ $<
 
-.PHONY: $(VERSION)
 $(VERSION):
-	-git describe > $@
+	-$(GIT_CMD) describe > $@
 
 #
 # Install/uninstall
@@ -53,10 +64,10 @@ $(VERSION):
 
 install: $(TARGET)
 	mkdir -p $(DESTDIR)
-	cp $< $(DESTDIR)/autogiro2xml
+	cp $< $(DESTDIR)/`basename "$(TARGET)" .phar`
 
 uninstall:
-	rm -f $(DESTDIR)/autogiro2xml
+	rm -f $(DESTDIR)/`basename "$(TARGET)" .phar`
 
 #
 # Tests and analysis
@@ -66,13 +77,13 @@ uninstall:
 
 analyze: phpstan phpcs
 
-test: $(BEHAT_CMD)
+test: vendor/installed $(BEHAT_CMD)
 	$(BEHAT_CMD) --stop-on-failure --suite=default
 
 check: $(TARGET) $(BEHAT_CMD)
 	$(BEHAT_CMD) --stop-on-failure --suite=phar
 
-phpstan: $(PHPSTAN_CMD)
+phpstan: vendor/installed $(PHPSTAN_CMD)
 	$(PHPSTAN_CMD) analyze -l 8 src
 
 phpcs: $(PHPCS_CMD)
