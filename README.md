@@ -1,7 +1,7 @@
 # autogiro2xml
 
 [![Packagist Version](https://img.shields.io/packagist/v/byrokrat/autogiro2xml.svg?style=flat-square)](https://packagist.org/packages/byrokrat/autogiro2xml)
-[![Build Status](https://img.shields.io/travis/byrokrat/autogiro2xml/master.svg?style=flat-square)](https://travis-ci.org/byrokrat/autogiro2xml)
+[![Build Status](https://img.shields.io/travis/byrokrat/autogiro2xml/master.svg?style=flat-square)](https://travis-ci.com/github/byrokrat/autogiro2xml)
 
 Command line utility for converting autogiro files to XML.
 
